@@ -14,11 +14,12 @@ import CookiesPolicy from './web/Cookies';
 import Download from './web/Download';
 
 export default function PublicWeb({ setRoute, setGlobalUser }) {
+  const isNativeApp = 
+    (typeof window !== 'undefined' && window.Capacitor) || 
+    (typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('electron'));
+
   const [activePage, setActivePage] = useState(() => {
-    if (typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('electron')) {
-      return 'login';
-    }
-    return 'home';
+    return isNativeApp ? 'login' : 'home';
   });
   
   const [loginUsername, setLoginUsername] = useState('');
@@ -98,11 +99,9 @@ export default function PublicWeb({ setRoute, setGlobalUser }) {
     }
   };
 
-  const isElectron = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('electron');
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 flex flex-col w-full">
-      {!isElectron && <Navbar activePage={activePage} setActivePage={changePage} />}
+      {!isNativeApp && <Navbar activePage={activePage} setActivePage={changePage} />}
 
       <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
         {activePage === 'home' && <Home setActivePage={changePage} />}
@@ -136,7 +135,7 @@ export default function PublicWeb({ setRoute, setGlobalUser }) {
         )}
       </main>
 
-      {!isElectron && <Footer setActivePage={changePage} />}
+      {!isNativeApp && <Footer setActivePage={changePage} />}
     </div>
   );
 }
