@@ -1,0 +1,71 @@
+# ============================
+# NODE / WEB
+# ============================
+**/node_modules/
+dist/
+**/dist/
+build/
+out/
+.vite/
+.cache/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Env files
+.env
+.env.*
+*.bak
+
+# ============================
+# CAPACITOR / ANDROID
+# ============================
+android/
+CapacitorApp/android/
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/build/
+android/build/
+android/capacitor-cordova-android-plugins/build/
+android/capacitor-cordova-android-plugins/.gradle/
+android/capacitor-cordova-android-plugins/.idea/
+
+
+# Keystores (muy importante)
+*.keystore
+*.jks
+
+# ============================
+# iOS (por si algún día lo añades)
+# ============================
+ios/
+*.xcworkspace
+*.xcuserdata
+*.xcuserstate
+Pods/
+
+# ============================
+# SISTEMA / TEMPORALES
+# ============================
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# ============================
+# IDEs
+# ============================
+.vscode/
+.idea/
+*.iml
+
+# ============================
+# ARCHIVOS DE SALIDA 
+# ============================
+*.exe
+*.apk
+*.tar.gz

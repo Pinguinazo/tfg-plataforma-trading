@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-50 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Lexend', sans-serif;
+  }
+}
+
+.glass-panel {
+  @apply bg-slate-900/50 backdrop-blur-md border border-slate-800;
+}
+
+.nav-link-active {
+  @apply text-blue-500;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.focus-ring {
+  @apply focus:outline-none focus:ring-4 focus:ring-blue-500/50 rounded-lg;
+}
+
+@layer base {
+  button, 
+  a, 
+  select, 
+  input[type="submit"], 
+  input[type="button"], 
+  [role="button"] {
+    cursor: pointer !important;
+  }
+}

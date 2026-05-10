@@ -1,0 +1,31 @@
+services:
+  cassandra-db:
+    image: cassandra:4.1
+    container_name: cassandra_tfg
+    environment:
+      - CASSANDRA_CLUSTER_NAME=TradingCluster
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=128M
+    healthcheck:
+      test: ["CMD-SHELL", "nodetool status || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend-api:
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile 
+    container_name: node_api_tfg
+    ports:
+      - "3002:3002"
+    depends_on:
+      cassandra-db:
+        condition: service_healthy
+    environment:
+      - CASSANDRA_HOST=cassandra-db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.1.77:3002/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5

@@ -1,0 +1,10 @@
+{
+  "appId": "com.tradingpulse.app",
+  "appName": "TradingPulse",
+  "webDir": "dist",
+  "server": {
+    "url": "https://tfg-plataforma-trading.vercel.app",
+    "cleartext": true
+  },
+  "appendUserAgent": "Capacitor"
+}
