@@ -47,13 +47,17 @@ async function getEmailOwnerId(email) {
 async function insertAdminLog(username, action, details) {
   try {
     await client.execute(`INSERT INTO tradingpulse_db.admin_logs (partition_key, log_id, admin_username, action, details, created_at) VALUES (1, uuid(), ?, ?, ?, toTimestamp(now()))`, [username || 'Sistema', action, details], { prepare: true });
-  } catch(e) {}
+  } catch (error) {
+    console.error(`[Admin Log Error] Fallo al registrar la acción '${action}' del admin '${username}':`, error.message);
+  }
 }
 
 async function insertUserLog(userId, action, details) {
   try {
     await client.execute(`INSERT INTO tradingpulse_db.user_logs (user_id, log_id, action, details, created_at) VALUES (?, uuid(), ?, ?, toTimestamp(now()))`, [userId, action, details], { prepare: true });
-  } catch(e) {}
+  } catch (error) {
+    console.error(`[User Log Error] Fallo al registrar la acción '${action}' para el usuario ${userId}:`, error.message);
+  }
 }
 
 async function initDB() {
@@ -62,7 +66,9 @@ async function initDB() {
     try {
       await client.connect();
       await client.execute(`CREATE TABLE IF NOT EXISTS tradingpulse_db.usuarios (user_id uuid PRIMARY KEY, username text, email text, password text, tier text, balance double, total_deposited double, holdings text, is_active boolean, created_at timestamp)`);
-      try { await client.execute(`ALTER TABLE tradingpulse_db.usuarios ADD deleted_at timestamp`); } catch (e) {}
+      try { await client.execute(`ALTER TABLE tradingpulse_db.usuarios ADD deleted_at timestamp`); } catch (error) {
+        console.warn("[DB Init] Nota: La columna deleted_at ya existe o no se pudo alterar.", error.message);
+      }
       await client.execute(`CREATE INDEX IF NOT EXISTS idx_usuarios_email ON tradingpulse_db.usuarios (email)`);
       await client.execute(`CREATE INDEX IF NOT EXISTS idx_usuarios_username ON tradingpulse_db.usuarios (username)`);
       await client.execute(`CREATE TABLE IF NOT EXISTS tradingpulse_db.transacciones_por_usuario (user_id uuid, timestamp bigint, tx_id uuid, type text, symbol text, ticker text, amount double, price double, PRIMARY KEY ((user_id), timestamp)) WITH CLUSTERING ORDER BY (timestamp DESC)`);
@@ -392,7 +398,9 @@ setInterval(async () => {
         await client.execute('DELETE FROM tradingpulse_db.usuarios WHERE user_id = ?', [row.user_id]);
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error("[Cron Job Error] Fallo durante la limpieza automática de usuarios eliminados:", error.message);
+  }
 }, 24 * 60 * 60 * 1000);
 
 const PORT = 3002;
