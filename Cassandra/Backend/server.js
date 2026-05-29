@@ -142,7 +142,7 @@ app.post('/api/users/login', async (req, res) => {
     if (!user.is_active) return res.status(403).json({ error: 'Cuenta en proceso de borrado' });
     
     let parsedHoldings = {};
-    try { if (typeof user.holdings === 'string') parsedHoldings = JSON.parse(user.holdings); else if (user.holdings) parsedHoldings = user.holdings; } catch(e) {}
+    try { if (typeof user.holdings === 'string') parsedHoldings = JSON.parse(user.holdings); else if (user.holdings) parsedHoldings = user.holdings; } catch(error) { parsedHoldings = {}; console.error("Error al leer cartera:", error.message); }
 
     await insertUserLog(user.user_id, 'LOGIN', 'Inicio de sesión en la plataforma');
     res.status(200).json({ message: 'Login exitoso', role: 'user', user_id: user.user_id, username: user.username, email: user.email, tier: user.tier, balance: user.balance || 0, total_deposited: user.total_deposited || 0, holdings: parsedHoldings });
