@@ -14,7 +14,6 @@ export default function FinancialTab({ dbStats, fetchAllData }) {
         <h2 className="text-2xl md:text-3xl font-bold text-red-400">Cassandra DB <span className="text-orange-400">Dashboard</span></h2>
       </header>
       
-      {/* 🚀 RESPONSIVE GRID (1 columna móvil, 2 tablet, 4 PC) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {[
           { label: 'Total Usuarios', value: dbStats.activeUsers.toLocaleString(), color: 'slate', border: 'border-slate-800' },
@@ -29,7 +28,6 @@ export default function FinancialTab({ dbStats, fetchAllData }) {
         ))}
       </div>
 
-      {/* 🚀 RESPONSIVE FLEX (Columna en móvil, Fila en PC) */}
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-[2] bg-[#111827] border border-slate-800 p-5 md:p-8 rounded-3xl shadow-xl">
           <h3 className="text-lg font-bold text-white mb-6 md:mb-8">Analítica de Ingresos</h3>

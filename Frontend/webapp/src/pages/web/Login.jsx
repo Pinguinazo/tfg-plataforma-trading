@@ -28,7 +28,6 @@ export default function Login({ handleLogin, loginUsername, setLoginUsername, lo
     <div className="max-w-md mx-auto bg-slate-900 border border-slate-800 p-10 rounded-3xl mt-10">
       <h1 className="text-3xl font-bold mb-6 text-center text-white">Bienvenido de nuevo</h1>
       
-      {/* 🚀 AQUÍ SE MOSTRARÁ EL ERROR BONITO */}
       {loginError && (
         <div className="mb-6 p-4 rounded-xl border font-bold text-sm bg-red-900/20 border-red-900/50 text-red-400 text-center">
           {loginError}

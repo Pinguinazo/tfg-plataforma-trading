@@ -144,7 +144,6 @@ export default function AdminsTab({ adminUser }) {
         </table>
       </div>
 
-      {/* MODAL CREAR/EDITAR ADMIN */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
           <div className="bg-[#111827] border border-slate-800 p-6 md:p-8 rounded-3xl w-full max-w-md shadow-2xl">

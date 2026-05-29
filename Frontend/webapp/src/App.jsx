@@ -15,8 +15,6 @@ export default function App() {
     if (globalUser) {
       localStorage.setItem('finpulse_session', JSON.stringify(globalUser));
       
-      // ¡ESTO ES LO QUE FALTABA! 
-      // Auto-enrutamiento al recargar la página (F5)
       if (route === 'home') {
         if (globalUser.role === 'master' || globalUser.role === 'admin') {
           setRoute('admin-dashboard');
@@ -27,23 +25,19 @@ export default function App() {
     } else {
       localStorage.removeItem('finpulse_session'); 
     }
-  }, [globalUser, route]); // <-- Añadido 'route' a las dependencias
+  }, [globalUser, route]); 
 
   if (globalUser) {
-    // Verificamos el rol directamente desde el backend
     const role = globalUser.role || 'user'; 
-
-    // Si es máster o admin secundario, van al AdminDashboard
     if ((role === 'master' || role === 'admin') && route === 'admin-dashboard') {
       return (
         <AdminDashboard 
-          adminUser={globalUser} // <-- Importante: Pasamos el usuario al dashboard
+          adminUser={globalUser} 
           onLogout={() => { setGlobalUser(null); setRoute('home'); }} 
         />
       );
     }
-
-    // Si es un usuario normal
+    
     if (role === 'user' && route === 'dashboard') {
       return (
         <Dashboard 

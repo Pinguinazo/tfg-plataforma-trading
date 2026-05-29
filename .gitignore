@@ -1,6 +1,4 @@
-# ============================
 # NODE / WEB
-# ============================
 **/node_modules/
 dist/
 **/dist/
@@ -20,9 +18,7 @@ yarn-error.log*
 .env.*
 *.bak
 
-# ============================
 # CAPACITOR / ANDROID
-# ============================
 android/
 CapacitorApp/android/
 android/.gradle/
@@ -35,37 +31,29 @@ android/capacitor-cordova-android-plugins/.gradle/
 android/capacitor-cordova-android-plugins/.idea/
 
 
-# Keystores (muy importante)
+# Keystores
 *.keystore
 *.jks
 
-# ============================
-# iOS (por si algún día lo añades)
-# ============================
+# iOS 
 ios/
 *.xcworkspace
 *.xcuserdata
 *.xcuserstate
 Pods/
 
-# ============================
-# SISTEMA / TEMPORALES
-# ============================
+# TEMPORALES
 *.tmp
 *.swp
 *.DS_Store
 Thumbs.db
 
-# ============================
 # IDEs
-# ============================
 .vscode/
 .idea/
 *.iml
 
-# ============================
 # ARCHIVOS DE SALIDA 
-# ============================
 *.exe
 *.apk
 *.tar.gz

@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { EXCHANGE_RATES, CURRENCY_SYMBOLS } from '../utils/constants';
 
-import TradingTab from './trading/Trading'; // Ajusta la ruta si es TradingTab.jsx
-import PortfolioTab from './trading/Cartera'; // Ajusta la ruta si es PortfolioTab.jsx
+import TradingTab from './trading/Trading'; 
+import PortfolioTab from './trading/Cartera'; 
 import AnalyticsTab from './trading/AnalyticsTab';
-import SettingsTab from './trading/Ajustes'; // Ajusta la ruta si es SettingsTab.jsx
+import SettingsTab from './trading/Ajustes'; 
 
 export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
   const [activeTab, setActiveTab] = useState('overview'); 
@@ -26,7 +26,6 @@ export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
     if (!globalUser || (!globalUser.id && !globalUser.user_id)) return;
     try {
       const userId = globalUser.id || globalUser.user_id;
-      // USAMOS LA VARIABLE DE ENTORNO SI LA TIENES, O TU IP LOCAL
       const apiUrl = import.meta.env.VITE_API_URL;
       const res = await fetch(`${apiUrl}/api/users/${userId}/transactions`);
       if (res.ok) {
@@ -213,7 +212,6 @@ export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
 
   return (
     <div className="min-h-screen bg-slate-950 flex w-full text-slate-50 relative">
-      {/* MENÚ LATERAL PARA ORDENADORES */}
       <aside className="w-64 border-r border-slate-800 hidden md:flex flex-col sticky top-0 h-screen bg-slate-950 z-20">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-10"><div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><span className="text-white font-bold">T</span></div><span className="text-xl font-bold">TradingPulse</span></div>
@@ -242,7 +240,6 @@ export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
         </div>
       </aside>
 
-      {/* CONTENIDO PRINCIPAL (Le he añadido pb-24 para que el contenido no quede oculto por la barra móvil) */}
       <main className="flex-1 min-w-0 flex flex-col p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto w-full">
         {activeTab === 'overview' && <TradingTab updateLotLimits={updateLotLimits} globalUser={globalUser} logEvent={logEvent} balance={balance} handleTrade={handleTrade} holdings={holdings} currency={currency} rate={rate} sym={sym} />}
         {activeTab === 'portfolio' && <PortfolioTab updateLotLimits={updateLotLimits} globalUser={globalUser} balance={balance} handleDepositExternal={handleDepositExternal} handleWithdrawExternal={handleWithdrawExternal} holdings={holdings} globalPrices={globalPrices} currency={currency} rate={rate} sym={sym} transactions={transactions} />}
@@ -250,8 +247,6 @@ export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
         {activeTab === 'settings' && (<SettingsTab globalUser={globalUser} setGlobalUser={setGlobalUser} currency={currency} setCurrency={setCurrency} logEvent={logEvent} onLogout={onLogout} />)}
       </main>
 
-      {/* 🚀 AQUÍ ESTÁ LA BARRA MÓVIL (Bottom Nav) QUE FALTABA 🚀 */}
-      {/* md:hidden hace que en PC desaparezca, fixed bottom-0 la clava abajo */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950/90 backdrop-blur-xl border-t border-slate-800 z-50 flex justify-around items-center p-2 pb-safe">
         <button onClick={() => setActiveTab('overview')} className={`flex flex-col items-center p-2 transition-colors ${activeTab === 'overview' ? 'text-blue-500' : 'text-slate-500 hover:text-slate-400'}`}>
           <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -274,7 +269,6 @@ export default function Dashboard({ onLogout, globalUser, setGlobalUser }) {
         </button>
       </nav>
 
-      {/* NOTIFICACIONES TOAST */}
       <div className="fixed bottom-20 md:bottom-8 right-4 md:right-8 z-50 flex flex-col gap-2 pointer-events-none transition-all">
         {toasts.map(log => (
           <div key={log.id} className={`p-4 rounded-xl shadow-lg border flex items-center gap-3 bg-slate-900 ${log.type === 'error' ? 'border-red-500/50 text-red-100' : log.type === 'success' ? 'border-green-500/50 text-green-100' : 'border-blue-500/50 text-blue-100'}`}><span className="text-sm font-bold">{log.message}</span></div>

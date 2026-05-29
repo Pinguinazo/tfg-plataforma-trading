@@ -3,7 +3,7 @@ import FinancialTab from './FinancialTab';
 import UsersTab from './UsersTab';
 import NodesTab from './NodesTab';
 import AdminsTab from './AdminsTab';
-import AdminSettingsTab from './AdminSettingsTab'; // 🚀 IMPORTAMOS LA NUEVA PESTAÑA
+import AdminSettingsTab from './AdminSettingsTab'; 
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +11,7 @@ const iconFinancial = () => <span className="cursor-pointer">📊</span>;
 const iconUsers = () => <span className="cursor-pointer">👥</span>;
 const iconNodes = () => <span className="cursor-pointer">🗄️</span>;
 const iconShield = () => <span className="cursor-pointer">🛡️</span>;
-const iconSettings = () => <span className="cursor-pointer">⚙️</span>; // 🚀 NUEVO ICONO
+const iconSettings = () => <span className="cursor-pointer">⚙️</span>; 
 
 export default function AdminDashboard({ adminUser, onLogout }) { 
   const [activeView, setActiveView] = useState('financial');
@@ -58,7 +58,7 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   if (adminUser?.role === 'master') {
     navItems.push({ id: 'admins', label: 'Admins', icon: iconShield() });
   }
-  // 🚀 AÑADIMOS LA PESTAÑA AL MENÚ
+
   navItems.push({ id: 'settings', label: 'Ajustes', icon: iconSettings() });
 
   const AdminSidebar = () => (
@@ -97,7 +97,6 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#0B0F19] font-sans selection:bg-red-900/50 relative overflow-hidden">
       
-      {/* CABECERA MÓVIL */}
       <div className="md:hidden bg-slate-950/90 border-b border-red-950 p-4 flex justify-between items-center z-20 sticky top-0">
         <div className="flex items-center gap-2">
            <div className="bg-red-600 w-8 h-8 rounded-lg font-bold text-white flex items-center justify-center text-sm">
@@ -112,7 +111,6 @@ export default function AdminDashboard({ adminUser, onLogout }) {
 
       <AdminSidebar />
       
-      {/* 🚀 RENDERIZAMOS LA VISTA */}
       <main className="flex-1 w-full pb-24 md:pb-0 h-screen overflow-y-auto">
         {activeView === 'financial' && <FinancialTab dbStats={dbStats} fetchAllData={fetchAllData} />}
         {activeView === 'users' && <UsersTab users={users} fetchAllData={fetchAllData} adminUser={adminUser} />}
@@ -121,7 +119,6 @@ export default function AdminDashboard({ adminUser, onLogout }) {
         {activeView === 'settings' && <AdminSettingsTab adminUser={adminUser} onLogout={handleLogout} />}
       </main>
 
-      {/* NAVEGACIÓN INFERIOR (Móvil) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-xl border-t border-red-950 z-50 flex justify-around items-center p-2 pb-safe">
         {navItems.map(item => (
           <button 
